@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>বাংলা টাইপিং — Bangla Typing (Open Source)</title>
+<meta name="description" content="Roman (Avro-style) phonetic e Bangla likhun, othoba on-screen keyboard diye likhun. Free, open source, MIT License.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <h1>বাংলা টাইপিং</h1>
+    <p class="tag">Roman e likhun, Bangla paben — Avro-style phonetic + keyboard. Open Source (MIT License).</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <nav class="tabs" role="tablist">
+    <button class="tab active" data-tab="phonetic" role="tab">ফোনেটিক</button>
+    <button class="tab" data-tab="keyboard" role="tab">কীবোর্ড</button>
+    <button class="tab" data-tab="rules" role="tab">লেখার নিয়ম</button>
+  </nav>
+
+  <!-- Phonetic tab -->
+  <section id="tab-phonetic" class="panel active">
+    <label class="lbl" for="romanInput">Roman (ইংরেজি অক্ষরে) লিখুন</label>
+    <textarea id="romanInput" rows="4" placeholder="ekhane likhun... jemon: ami banglay likhte pari" spellcheck="false"></textarea>
+    <div class="row">
+      <label class="check"><input type="checkbox" id="digitToggle" checked> বাংলা সংখ্যা (০-৯)</label>
+      <button class="btn ghost" id="btnSample" type="button">উদাহরণ</button>
+      <button class="btn ghost" id="btnClear" type="button">মুছুন</button>
+    </div>
+    <label class="lbl" for="banglaOutput">বাংলা</label>
+    <textarea id="banglaOutput" rows="4" readonly placeholder="এখানে বাংলা লেখা দেখা যাবে"></textarea>
+    <div class="row">
+      <span class="count" id="countInfo">০ অক্ষর • ০ শব্দ</span>
+      <button class="btn primary" id="btnCopy" type="button">কপি করুন</button>
+      <button class="btn" id="btnDownload" type="button">.txt ডাউনলোড</button>
+    </div>
+    <p class="hint" id="copyMsg" aria-live="polite"></p>
+  </section>
+
+  <!-- Keyboard tab -->
+  <section id="tab-keyboard" class="panel">
+    <label class="lbl" for="kbOutput">বাংলা লিখুন</label>
+    <textarea id="kbOutput" rows="4" placeholder="কীবোর্ডের বোতাম চাপুন"></textarea>
+    <div class="row">
+      <span class="count" id="kbCount">০ অক্ষর</span>
+      <button class="btn ghost" id="kbClear" type="button">মুছুন</button>
+      <button class="btn primary" id="kbCopy" type="button">কপি করুন</button>
+      <button class="btn" id="kbDownload" type="button">.txt ডাউনলোড</button>
+    </div>
+    <div id="keyboard" class="keyboard"></div>
+    <p class="hint">যুক্তাক্ষর লিখতে মাঝখানে ্ (হসন্ত) চাপুন — যেমন ক + ্ + ষ = ক্ষ।</p>
+  </section>
+
+  <!-- Rules tab -->
+  <section id="tab-rules" class="panel">
+    <h2>ফোনেটিক লেখার নিয়ম</h2>
+    <p>ইংরেজি অক্ষরে বাংলা উচ্চারণ লিখুন — সফটওয়্যার নিজেই বাংলা করে দেবে।</p>
+    <table class="rules">
+      <tr><th>লিখুন</th><th>পাবেন</th><th>উদাহরণ</th></tr>
+      <tr><td>ami, tumi, kemon</td><td>আমি, তুমি, কেমন</td><td>ami bhalo achi → আমি ভালো আছি</td></tr>
+      <tr><td>a / A</td><td>অ / আ</td><td>ar = আর, Alo = আলো</td></tr>
+      <tr><td>o / O</td><td>অ / ও</td><td>kotha = কথা, tOmar = তোমার</td></tr>
+      <tr><td>kh, gh, ch, jh, th, dh, ph, bh</td><td>খ, ঘ, ছ, ঝ, থ, ধ, ফ, ভ</td><td>kotha = কথা, bhalo = ভালো</td></tr>
+      <tr><td>T, Th, D, Dh, N</td><td>ট, ঠ, ড, ঢ, ণ</td><td>Taka = টাকা</td></tr>
+      <tr><td>sh / Sh / s</td><td>শ / ষ / স</td><td>shikkha = শিক্ষা</td></tr>
+      <tr><td>ng</td><td>ঙ / ং</td><td>bangla = বাংলা, song = সং</td></tr>
+      <tr><td>r</td><td>র / ্র / র্</td><td>amra = আমরা, kormo = কর্ম</td></tr>
+      <tr><td>y / Y</td><td>য / য়</td><td>bhoy = ভয়, priyo = প্রিয়</td></tr>
+      <tr><td>rri</td><td>ঋ / ৃ</td><td>krrishna = কৃশ্না</td></tr>
+      <tr><td>R / Rh</td><td>ড় / ঢ়</td><td>camRa = চামড়া</td></tr>
+      <tr><td>o মাঝখানে</td><td>যুক্ত ভাঙে</td><td>asobo = আসবো (আস্বো নয়)</td></tr>
+      <tr><td>0-9</td><td>০-৯</td><td>2026 = ২০২৬</td></tr>
+    </table>
+    <h2>এই সফটওয়্যার সম্পর্কে</h2>
+    <p>এটা একটা <strong>open source</strong> প্রজেক্ট — MIT License। মানে সোর্স কোড সবার জন্য খোলা: দেখতে পারেন, বদলাতে পারেন, নিজের প্রজেক্টে ব্যবহার করতে পারেন। কোনো সার্ভার নেই — আপনার লেখা আপনার ব্রাউজারেই থাকে, কোথাও পাঠানো হয় না।</p>
+    <p>কন্ট্রিবিউট করতে চাইলে: কোডে ভুল পেলে issue খুলুন, নতুন ফিচার চাইলে pull request পাঠান। পরীক্ষা চালাতে: <code>node transliterate.test.js</code> — ৫৬টা টেস্ট কেস আছে।</p>
+  </section>
+
+  <footer>
+    <p>বাংলা টাইপিং • Open Source • MIT License • কোনো তথ্য সংগ্রহ করা হয় না</p>
+  </footer>
+</main>
+
+<script src="transliterate.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
